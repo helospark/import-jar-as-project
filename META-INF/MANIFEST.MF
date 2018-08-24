@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Import-jar-as-project
+Bundle-SymbolicName: import-jar-as-project;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.helospark.importjar.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.jdt.ui,
+ org.eclipse.jdt.core,
+ org.eclipse.jdt.launching,
+ org.eclipse.jface.text
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: import-jar-as-project
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .,lib/fernflower.jar
