@@ -10,8 +10,10 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jdt.ui,
  org.eclipse.jdt.core,
  org.eclipse.jdt.launching,
- org.eclipse.jface.text
+ org.eclipse.jface.text,
+ org.eclipse.pde.core,
+ org.eclipse.m2e.jdt
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: import-jar-as-project
 Bundle-ActivationPolicy: lazy
-Bundle-ClassPath: .,lib/fernflower.jar
+Bundle-ClassPath: .,lib/cfr-0.137.jar

@@ -1,0 +1,5 @@
+*/build
+bin/
+*/test-output
+*/target
+*/test-classes
