@@ -1,8 +1,5 @@
 package com.helospark.importjar.handlers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -11,10 +8,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.launching.IVMInstall;
-import org.eclipse.jdt.launching.JavaRuntime;
-import org.eclipse.jdt.launching.LibraryLocation;
-import org.eclipse.pde.internal.core.PDECore;
 
 public class ProjectCreator {
 
@@ -32,19 +25,11 @@ public class ProjectCreator {
             m_project.setDescription(description, null);
 
             IJavaProject javaProject = JavaCore.create(m_project);
-//      IFolder binFolder = m_project.getFolder("bin");
-//      binFolder.create(false, true, null);
-//      javaProject.setOutputLocation(binFolder.getFullPath(), null);
 
-            List<IClasspathEntry> entries = new ArrayList<IClasspathEntry>();
-            IVMInstall vmInstall = JavaRuntime.getDefaultVMInstall();
-            LibraryLocation[] locations = JavaRuntime.getLibraryLocations(vmInstall);
-            for (LibraryLocation element : locations) {
-                entries.add(JavaCore.newLibraryEntry(element.getSystemLibraryPath(), null, null));
-            }
-            entries.add(JavaCore.newContainerEntry(PDECore.REQUIRED_PLUGINS_CONTAINER_PATH));
-
-            javaProject.setRawClasspath(entries.toArray(new IClasspathEntry[entries.size()]), null);
+            // Causes Java Model Exception: Java Model Status [Cannot nest '*' inside
+            // 'project'. To enable the nesting exclude '*' from 'project'] if not
+            // cleared
+            javaProject.setRawClasspath(new IClasspathEntry[0], null);
 
             return javaProject;
         } catch (CoreException e) {

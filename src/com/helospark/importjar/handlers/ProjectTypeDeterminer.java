@@ -6,11 +6,20 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import com.helospark.importjar.handlers.projecttypereader.ProjectUtil;
+import com.helospark.importjar.handlers.projecttypereader.util.ProjectUtil;
 
 public class ProjectTypeDeterminer {
 
     public static ProjectType determineProjectType(File rootFolder, List<File> allFiles) throws FileNotFoundException, IOException {
+        Optional<String> webxmlFile = allFiles
+                .stream()
+                .map(file -> file.getAbsolutePath())
+                .filter(file -> file.matches(".*web.xml"))
+                .findFirst();
+        if (webxmlFile.isPresent()) {
+            return ProjectType.WAR;
+        }
+
         Optional<String> pomFile = allFiles
                 .stream()
                 .map(file -> file.getAbsolutePath())

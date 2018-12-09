@@ -12,7 +12,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jdt.launching,
  org.eclipse.jface.text,
  org.eclipse.pde.core,
- org.eclipse.m2e.jdt
+ org.eclipse.m2e.jdt,
+ org.eclipse.m2e.core.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: import-jar-as-project
 Bundle-ActivationPolicy: lazy

@@ -1,4 +1,4 @@
-package com.helospark.importjar.handlers.projecttypereader;
+package com.helospark.importjar.handlers.projecttypereader.util;
 
 import java.io.File;
 import java.util.Collections;

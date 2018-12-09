@@ -12,8 +12,11 @@ import java.util.zip.ZipInputStream;
 import org.benf.cfr.reader.api.CfrDriver;
 import org.eclipse.jdt.core.IJavaProject;
 
+import com.helospark.importjar.handlers.projecttypereader.EclipsePluginProjectReader;
+import com.helospark.importjar.handlers.projecttypereader.GenericJavaProjectReader;
 import com.helospark.importjar.handlers.projecttypereader.MavenProjectReader;
-import com.helospark.importjar.handlers.projecttypereader.ProjectTypeReaderRequest;
+import com.helospark.importjar.handlers.projecttypereader.WarProjectReader;
+import com.helospark.importjar.handlers.projecttypereader.util.ProjectTypeReaderRequest;
 
 public class JarWithoutSourceImportHandler {
     private ProjectCreator projectCreator = new ProjectCreator();
@@ -51,7 +54,11 @@ public class JarWithoutSourceImportHandler {
         if (type.equals(ProjectType.MAVEN)) {
             new MavenProjectReader().readProject(request);
         } else if (type.equals(ProjectType.PDE_PLUGIN)) {
-            // ... later
+            new EclipsePluginProjectReader().readProject(request);
+        } else if (type.equals(ProjectType.WAR)) {
+            new WarProjectReader().readProject(request);
+        } else {
+            new GenericJavaProjectReader().readProject(request);
         }
     }
 

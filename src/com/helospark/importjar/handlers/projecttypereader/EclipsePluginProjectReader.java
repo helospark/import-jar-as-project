@@ -7,17 +7,17 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
-import org.eclipse.m2e.core.ui.internal.UpdateMavenProjectJob;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.pde.internal.core.PDECore;
 
 import com.helospark.importjar.handlers.projecttypereader.util.ProjectFileInfo;
 import com.helospark.importjar.handlers.projecttypereader.util.ProjectFileInfoProvider;
 import com.helospark.importjar.handlers.projecttypereader.util.ProjectTypeReaderRequest;
 import com.helospark.importjar.handlers.projecttypereader.util.ProjectUtil;
 
-public class MavenProjectReader {
+public class EclipsePluginProjectReader {
     private static final String SOURCE_FOLDER = "src/main/java";
     private static final String RESOURCE_FOLDER = "src/main/resources";
 
@@ -32,18 +32,22 @@ public class MavenProjectReader {
         for (File currentFile : allFiles) {
             ProjectFileInfo info = ProjectFileInfoProvider.provideInfo(currentFile, rootFolder);
             InputStream inputStream = new FileInputStream(currentFile);
-            IPackageFragmentRoot srcFolder = jarProject.getPackageFragmentRoot(sourceFolder);
+
             if (info.extension.equals("java")) {
+                IPackageFragmentRoot srcFolder = jarProject.getPackageFragmentRoot(sourceFolder);
                 ProjectUtil.createJavaFile(info, inputStream, srcFolder);
-            } else if (info.nameWithExtension.equals("pom.xml")) {
-                ProjectUtil.createRegularFile(jarProject, inputStream, "pom.xml");
+            } else if (info.relativePathWithFilename.startsWith("META-INF")) {
+                ProjectUtil.createRegularFile(jarProject, inputStream, info.relativePathWithFilename);
             } else {
                 ProjectUtil.createRegularFile(jarProject, inputStream, RESOURCE_FOLDER + "/" + info.relativeDirectory + "/" + info.nameWithExtension);
             }
+
         }
 
-        ProjectUtil.addNature(jarProject, "org.eclipse.m2e.core.maven2Nature");
         ProjectUtil.appendToClasspath(jarProject, Arrays.asList(sourceFolder, resourceFolder));
-        (new UpdateMavenProjectJob(new IProject[] { jarProject.getProject() })).schedule();
+        ProjectUtil.addNature(jarProject, "org.eclipse.pde.PluginNature");
+        ProjectUtil.addDefaultJavaToClasspath(jarProject);
+        ProjectUtil.appendEntriesToClasspath(jarProject, Arrays.asList(JavaCore.newContainerEntry(PDECore.REQUIRED_PLUGINS_CONTAINER_PATH)));
     }
+
 }
