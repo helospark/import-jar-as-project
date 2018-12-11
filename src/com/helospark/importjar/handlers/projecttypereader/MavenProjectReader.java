@@ -1,5 +1,7 @@
 package com.helospark.importjar.handlers.projecttypereader;
 
+import static java.io.File.separator;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -38,7 +40,7 @@ public class MavenProjectReader {
             } else if (info.nameWithExtension.equals("pom.xml")) {
                 ProjectUtil.createRegularFile(jarProject, inputStream, "pom.xml");
             } else {
-                ProjectUtil.createRegularFile(jarProject, inputStream, RESOURCE_FOLDER + "/" + info.relativeDirectory + "/" + info.nameWithExtension);
+                ProjectUtil.createRegularFile(jarProject, inputStream, RESOURCE_FOLDER + separator + info.relativeDirectory + separator + info.nameWithExtension);
             }
         }
 

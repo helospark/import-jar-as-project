@@ -1,5 +1,7 @@
 package com.helospark.importjar.handlers.projecttypereader;
 
+import static java.io.File.separator;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -36,10 +38,12 @@ public class EclipsePluginProjectReader {
             if (info.extension.equals("java")) {
                 IPackageFragmentRoot srcFolder = jarProject.getPackageFragmentRoot(sourceFolder);
                 ProjectUtil.createJavaFile(info, inputStream, srcFolder);
+            } else if (info.relativePathWithFilename.endsWith("plugin.xml")) {
+                ProjectUtil.createRegularFile(jarProject, inputStream, "plugin.xml");
             } else if (info.relativePathWithFilename.startsWith("META-INF")) {
                 ProjectUtil.createRegularFile(jarProject, inputStream, info.relativePathWithFilename);
             } else {
-                ProjectUtil.createRegularFile(jarProject, inputStream, RESOURCE_FOLDER + "/" + info.relativeDirectory + "/" + info.nameWithExtension);
+                ProjectUtil.createRegularFile(jarProject, inputStream, RESOURCE_FOLDER + separator + info.relativeDirectory + separator + info.nameWithExtension);
             }
 
         }

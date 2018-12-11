@@ -49,16 +49,16 @@ public class WarProjectReader {
                 hasPomXml = true;
             } else if (info.relativePathWithFilename.startsWith("WEB-INF")) {
                 if (info.relativeDirectory.contains("lib")) {
-                    IFile createdLibrary = ProjectUtil.createRegularFile(jarProject, inputStream, LIB_FOLDER + "/" + info.nameWithExtension);
+                    IFile createdLibrary = ProjectUtil.createRegularFile(jarProject, inputStream, LIB_FOLDER + File.separator + info.nameWithExtension);
                     libraries.add(JavaCore.newLibraryEntry(createdLibrary.getFullPath(), null, null, false));
                 } else if (info.relativeDirectory.contains("classes")) {
                     String pathWithoutMetaInf = info.relativePathWithFilename.replaceFirst("WEB-INF/classes/", "");
-                    ProjectUtil.createRegularFile(jarProject, inputStream, RESOURCE_FOLDER + "/" + pathWithoutMetaInf);
+                    ProjectUtil.createRegularFile(jarProject, inputStream, RESOURCE_FOLDER + File.separator + pathWithoutMetaInf);
                 } else {
-                    ProjectUtil.createRegularFile(jarProject, inputStream, WEBAPP_FOLDER + "/" + info.relativePathWithFilename);
+                    ProjectUtil.createRegularFile(jarProject, inputStream, WEBAPP_FOLDER + File.separator + info.relativePathWithFilename);
                 }
             } else {
-                ProjectUtil.createRegularFile(jarProject, inputStream, WEBAPP_FOLDER + "/" + info.relativeDirectory + "/" + info.nameWithExtension);
+                ProjectUtil.createRegularFile(jarProject, inputStream, WEBAPP_FOLDER + File.separator + info.relativeDirectory + File.separator + info.nameWithExtension);
             }
         }
 

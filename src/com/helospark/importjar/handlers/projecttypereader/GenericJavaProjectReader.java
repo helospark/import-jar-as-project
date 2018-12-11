@@ -1,5 +1,7 @@
 package com.helospark.importjar.handlers.projecttypereader;
 
+import static java.io.File.separator;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -35,7 +37,7 @@ public class GenericJavaProjectReader {
                 IPackageFragmentRoot srcFolder = jarProject.getPackageFragmentRoot(sourceFolder);
                 ProjectUtil.createJavaFile(info, inputStream, srcFolder);
             } else {
-                ProjectUtil.createRegularFile(jarProject, inputStream, RESOURCE_FOLDER + "/" + info.relativeDirectory + "/" + info.nameWithExtension);
+                ProjectUtil.createRegularFile(jarProject, inputStream, RESOURCE_FOLDER + separator + info.relativeDirectory + separator + info.nameWithExtension);
             }
 
         }

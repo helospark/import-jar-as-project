@@ -1,5 +1,8 @@
 package com.helospark.importjar.handlers;
 
+import static java.io.File.separator;
+import static java.io.File.separatorChar;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -12,12 +15,15 @@ import java.util.List;
 import org.benf.cfr.reader.api.OutputSinkFactory;
 import org.benf.cfr.reader.api.SinkReturns;
 import org.benf.cfr.reader.api.SinkReturns.Decompiled;
+import org.eclipse.core.runtime.IProgressMonitor;
 
 public class MyOutputSinkFactory implements OutputSinkFactory {
     private String baseFolder;
+    private IProgressMonitor progressMonitor;
 
-    public MyOutputSinkFactory(String baseFolder) {
+    public MyOutputSinkFactory(String baseFolder, IProgressMonitor progressMonitor) {
         this.baseFolder = baseFolder;
+        this.progressMonitor = progressMonitor;
     }
 
     @Override
@@ -30,7 +36,7 @@ public class MyOutputSinkFactory implements OutputSinkFactory {
         return arg0 -> {
             if (arg0 instanceof SinkReturns.Decompiled) {
                 Decompiled decompiled = (SinkReturns.Decompiled) arg0;
-                File decompiledFolder = new File(baseFolder + "/" + decompiled.getPackageName().replace('.', '/'));
+                File decompiledFolder = new File(baseFolder + separator + decompiled.getPackageName().replace('.', separatorChar));
                 decompiledFolder.mkdirs();
                 File decompiledFile = new File(decompiledFolder, decompiled.getClassName() + ".java");
                 try (FileOutputStream fos = new FileOutputStream(decompiledFile)) {
@@ -40,6 +46,7 @@ public class MyOutputSinkFactory implements OutputSinkFactory {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                progressMonitor.worked(1);
             }
         };
     }

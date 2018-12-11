@@ -1,5 +1,7 @@
 package com.helospark.importjar.handlers.projecttypereader.util;
 
+import static java.io.File.separator;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,7 +44,7 @@ public class ProjectUtil {
     }
 
     public static IFile createUninitializedFiled(IJavaProject jarProject, String name) throws CoreException {
-        String[] parts = name.split("/");
+        String[] parts = name.split(separator);
         IFolder folder = jarProject.getProject().getFolder(parts[0]);
         if (!folder.exists()) {
             folder.create(true, true, null);
@@ -76,7 +78,7 @@ public class ProjectUtil {
     }
 
     public static IFolder createOrGetFolder(IJavaProject javaProject, String folderName) throws CoreException {
-        String[] parts = folderName.split("/");
+        String[] parts = folderName.split(File.separator);
 
         if (parts.length == 0) {
             throw new IllegalArgumentException("No folder is returned");
@@ -126,7 +128,7 @@ public class ProjectUtil {
     }
 
     public static IFile createRegularFile(IJavaProject jarProject, InputStream inputStream, String fileAbsolutePath) throws CoreException {
-        int fileSeparator = fileAbsolutePath.lastIndexOf("/");
+        int fileSeparator = fileAbsolutePath.lastIndexOf(separator);
         if (fileSeparator == -1) {
             IFile pomFile = jarProject.getProject().getFile(fileAbsolutePath);
             pomFile.create(inputStream, true, null);
@@ -142,7 +144,7 @@ public class ProjectUtil {
     }
 
     public static void createJavaFile(ProjectFileInfo info, InputStream inputStream, IPackageFragmentRoot srcFolder) throws JavaModelException, IOException {
-        String packageName = info.relativeDirectory.replaceAll("/", ".").replaceAll("-", "_");
+        String packageName = info.relativeDirectory.replaceAll(separator, ".").replaceAll("-", "_");
         IPackageFragment fragment = srcFolder.createPackageFragment(packageName, true, null);
         String source = new String(ProjectUtil.readAllBytes(inputStream), StandardCharsets.UTF_8);
         fragment.createCompilationUnit(info.nameWithExtension, source, true, null);

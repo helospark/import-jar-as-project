@@ -22,19 +22,23 @@ public class JarWithoutSourceMainImportPage extends WizardPage implements IWizar
 
     @Override
     public void createControl(Composite parent) {
-        parent.getShell().setSize(500, 300);
+        parent.getShell().setSize(600, 300);
         container = new Composite(parent, SWT.NONE);
         GridLayout layout = new GridLayout();
         container.setLayout(layout);
         layout.numColumns = 2;
 
         text = new Text(container, SWT.SINGLE | SWT.BORDER);
-        text.setLayoutData(new GridData(SWT.FILL, SWT.LEFT, true, false, 1, 1));
+        text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         Button browseButton = new Button(container, 0);
         browseButton.setText("Browse...");
         browseButton.addListener(SWT.Selection, e -> {
             FileDialog fd = new FileDialog(parent.getShell(), SWT.SAVE);
             fd.setText("Browse jar/war to decompile");
+            File file = new File(text.getText());
+            if (file.exists()) {
+                fd.setFilterPath(file.getParentFile().getAbsolutePath());
+            }
             String[] filterExt = { "*.jar", "*.war" };
             fd.setFilterExtensions(filterExt);
             String foundFilePath = fd.open();
@@ -57,8 +61,7 @@ public class JarWithoutSourceMainImportPage extends WizardPage implements IWizar
 
     @Override
     public boolean canFlipToNextPage() {
-        String value = text.getText();
-        return new File(value).exists();
+        return false;
     }
 
     @Override
@@ -69,4 +72,5 @@ public class JarWithoutSourceMainImportPage extends WizardPage implements IWizar
     public File getFile() {
         return new File(text.getText());
     }
+
 }
