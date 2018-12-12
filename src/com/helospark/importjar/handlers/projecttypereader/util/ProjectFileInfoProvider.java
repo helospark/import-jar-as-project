@@ -8,7 +8,8 @@ public class ProjectFileInfoProvider {
 
     public static ProjectFileInfo provideInfo(File currentFile, File rootFolder) {
         ProjectFileInfo result = new ProjectFileInfo();
-        result.relativePathWithFilename = currentFile.getAbsolutePath().replaceFirst(rootFolder.getAbsolutePath() + separator, "");
+        String prefix = rootFolder.getAbsolutePath() + separator;
+        result.relativePathWithFilename = currentFile.getAbsolutePath().substring(prefix.length());
         result.nameWithExtension = currentFile.getName();
         int index = result.relativePathWithFilename.lastIndexOf(separator);
         result.relativeDirectory = "";

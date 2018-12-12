@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -78,7 +79,7 @@ public class ProjectUtil {
     }
 
     public static IFolder createOrGetFolder(IJavaProject javaProject, String folderName) throws CoreException {
-        String[] parts = folderName.split(File.separator);
+        String[] parts = folderName.split(FileUtil.fileNameSeparatorPattern);
 
         if (parts.length == 0) {
             throw new IllegalArgumentException("No folder is returned");
@@ -144,7 +145,7 @@ public class ProjectUtil {
     }
 
     public static void createJavaFile(ProjectFileInfo info, InputStream inputStream, IPackageFragmentRoot srcFolder) throws JavaModelException, IOException {
-        String packageName = info.relativeDirectory.replaceAll(separator, ".").replaceAll("-", "_");
+        String packageName = info.relativeDirectory.replaceAll(FileUtil.fileNameSeparatorPattern, ".").replaceAll("-", "_");
         IPackageFragment fragment = srcFolder.createPackageFragment(packageName, true, null);
         String source = new String(ProjectUtil.readAllBytes(inputStream), StandardCharsets.UTF_8);
         fragment.createCompilationUnit(info.nameWithExtension, source, true, null);
