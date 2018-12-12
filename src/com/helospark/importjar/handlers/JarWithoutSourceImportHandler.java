@@ -5,7 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -16,11 +18,22 @@ import org.eclipse.jdt.core.IJavaProject;
 import com.helospark.importjar.handlers.projecttypereader.EclipsePluginProjectReader;
 import com.helospark.importjar.handlers.projecttypereader.GenericJavaProjectReader;
 import com.helospark.importjar.handlers.projecttypereader.MavenProjectReader;
+import com.helospark.importjar.handlers.projecttypereader.ProjectCreatorChainItem;
 import com.helospark.importjar.handlers.projecttypereader.WarProjectReader;
 import com.helospark.importjar.handlers.projecttypereader.util.ProjectTypeReaderRequest;
 
 public class JarWithoutSourceImportHandler {
     private ProjectCreator projectCreator = new ProjectCreator();
+    private Map<ProjectType, ProjectCreatorChainItem> projectTypeToProjectCreator;
+
+    public JarWithoutSourceImportHandler() {
+        this.projectCreator = new ProjectCreator();
+        projectTypeToProjectCreator = new HashMap<>();
+        projectTypeToProjectCreator.put(ProjectType.GENERIC_ECLIPSE, new GenericJavaProjectReader());
+        projectTypeToProjectCreator.put(ProjectType.MAVEN, new MavenProjectReader());
+        projectTypeToProjectCreator.put(ProjectType.WAR, new WarProjectReader());
+        projectTypeToProjectCreator.put(ProjectType.PDE_PLUGIN, new EclipsePluginProjectReader());
+    }
 
     public void execute(File file, IProgressMonitor progressMonitor) {
         try {
@@ -56,15 +69,8 @@ public class JarWithoutSourceImportHandler {
                 .withJarProject(jarProject)
                 .build();
 
-        if (type.equals(ProjectType.MAVEN)) {
-            new MavenProjectReader().readProject(request);
-        } else if (type.equals(ProjectType.PDE_PLUGIN)) {
-            new EclipsePluginProjectReader().readProject(request);
-        } else if (type.equals(ProjectType.WAR)) {
-            new WarProjectReader().readProject(request);
-        } else {
-            new GenericJavaProjectReader().readProject(request);
-        }
+        projectTypeToProjectCreator.get(type).readProject(request);
+
         progressMonitor.done();
 
         rootFolder.delete();

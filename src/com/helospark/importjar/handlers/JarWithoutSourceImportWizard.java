@@ -1,8 +1,11 @@
 package com.helospark.importjar.handlers;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
@@ -55,6 +58,14 @@ public class JarWithoutSourceImportWizard extends Wizard implements IImportWizar
     private void importProject() {
         try {
             File file = page.getFile();
+
+            if (!file.exists()) {
+                ErrorDialog.openError(getShell(), "Selected file does not exist", "File not found", Status.CANCEL_STATUS);
+            }
+            if (!canOpenAsZip(file)) {
+                ErrorDialog.openError(getShell(), "Invalid file", "Selected file does not seem like a valid ZIP (jar, war) file", Status.CANCEL_STATUS);
+            }
+
             getContainer().run(true, false, progressMonitor -> {
                 try {
                     progressMonitor.beginTask("Importing", importHandler.estimateNumberOfFiles(file));
@@ -68,6 +79,19 @@ public class JarWithoutSourceImportWizard extends Wizard implements IImportWizar
         } catch (Exception e) {
             // I hate checked exceptions with a passion
             throw new RuntimeException(e);
+        }
+    }
+
+    private boolean canOpenAsZip(File file) {
+        try (ZipInputStream zis = new ZipInputStream(new FileInputStream(file))) {
+            ZipEntry zipEntry = zis.getNextEntry();
+            if (zipEntry == null) {
+                throw new RuntimeException("No entries in ZIP");
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
         }
     }
 

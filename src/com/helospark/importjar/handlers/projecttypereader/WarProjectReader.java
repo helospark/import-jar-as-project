@@ -21,7 +21,7 @@ import com.helospark.importjar.handlers.projecttypereader.util.ProjectFileInfoPr
 import com.helospark.importjar.handlers.projecttypereader.util.ProjectTypeReaderRequest;
 import com.helospark.importjar.handlers.projecttypereader.util.ProjectUtil;
 
-public class WarProjectReader {
+public class WarProjectReader implements ProjectCreatorChainItem {
     private static final String SOURCE_FOLDER = "src/main/java";
     private static final String RESOURCE_FOLDER = "src/main/resources";
     private static final String LIB_FOLDER = "lib";

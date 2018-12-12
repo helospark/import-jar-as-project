@@ -39,7 +39,7 @@ public class JarWithoutSourceMainImportPage extends WizardPage implements IWizar
             if (file.exists()) {
                 fd.setFilterPath(file.getParentFile().getAbsolutePath());
             }
-            String[] filterExt = { "*.jar", "*.war" };
+            String[] filterExt = { "*.jar;*.war" };
             fd.setFilterExtensions(filterExt);
             String foundFilePath = fd.open();
             text.setText(foundFilePath);
