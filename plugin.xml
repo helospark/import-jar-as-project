@@ -6,7 +6,6 @@
          <wizard id="jarwithoutsourceimport"
              class="com.helospark.importjar.handlers.JarWithoutSourceImportWizard"
              name="Jar without source"
-             category="Decompiled"
              icon="icons/import-to-jar-icon.png">
          </wizard>
    </extension>
