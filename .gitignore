@@ -3,3 +3,4 @@ bin/
 */test-output
 */target
 */test-classes
+*.jar

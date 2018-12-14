@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Import-jar-as-project
-Bundle-SymbolicName: import-jar-as-project;singleton:=true
+Bundle-SymbolicName: com.helospark.ImportJarAsPlugin;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: com.helospark.importjar.Activator
 Require-Bundle: org.eclipse.ui,
@@ -17,4 +17,5 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: import-jar-as-project
 Bundle-ActivationPolicy: lazy
-Bundle-ClassPath: .,lib/cfr-0.137.jar
+Bundle-ClassPath: .,
+ lib/cfr-0.137.jar
