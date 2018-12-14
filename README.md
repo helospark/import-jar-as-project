@@ -1,5 +1,7 @@
 Import a .jar or .war as a project into you Eclipse IDE, even if you don't have the source by decompiling the jar
 
+You can find it on marketplace here: https://marketplace.eclipse.org/content/import-jar-project-0
+
 ## Supported project types
 
  - Maven
