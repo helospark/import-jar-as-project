@@ -2,7 +2,7 @@
 <feature
       id="com.helospark.ImportJarAsProjectFeature"
       label="ImportJarAsProjectPlugin"
-      version="1.0.1.qualifier">
+      version="1.0.1">
 
    <description url="http://helospark.com/import-jar-as-project/">
       Import jar as project plugin

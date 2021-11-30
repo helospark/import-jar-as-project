@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.helospark</groupId>
 	<artifactId>com.helospark.ImportJarAsProject</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<packaging>pom</packaging>
 	<properties>
 		<tychoVersion>2.5.0</tychoVersion>
@@ -174,17 +174,11 @@
 							<goal>plugin-source</goal>
 						</goals>
 					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho.extras</groupId>
-				<artifactId>tycho-source-feature-plugin</artifactId>
-				<executions>
 					<execution>
-						<id>source-feature</id>
+						<id>feature-source</id>
 						<phase>package</phase>
 						<goals>
-							<goal>source-feature</goal>
+							<goal>feature-source</goal>
 						</goals>
 						<configuration>
 							<excludes>
