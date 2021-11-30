@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="com.helospark.ImportJarAsProjectFeature"
-      label="ImportJarAsProjectFeature"
-      version="1.0.0.qualifier">
+      label="ImportJarAsProjectPlugin"
+      version="1.0.1">
 
    <description url="http://helospark.com/import-jar-as-project/">
       Import jar as project plugin
@@ -44,7 +44,7 @@ SOFTWARE.
    </requires>
 
    <plugin
-         id="com.helospark.ImportJarAsPlugin"
+         id="com.helospark.ImportJarAsProject.plugin"
          download-size="0"
          install-size="0"
          version="0.0.0"
