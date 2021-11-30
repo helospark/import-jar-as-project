@@ -1,6 +1,4 @@
-*/build
-bin/
-*/test-output
-*/target
-*/test-classes
-*.jar
+.classpath
+.project
+.settings/
+target/
