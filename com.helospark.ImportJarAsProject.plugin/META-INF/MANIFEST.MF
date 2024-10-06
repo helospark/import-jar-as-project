@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Import-jar-as-project
 Bundle-Vendor: com.helospark.ImportJarAsProject.plugin
 Bundle-SymbolicName: com.helospark.ImportJarAsProject.plugin;singleton:=true
-Bundle-Version: 1.0.1
+Bundle-Version: 1.0.2
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,

@@ -2,9 +2,9 @@
 <feature
       id="com.helospark.ImportJarAsProjectFeature"
       label="ImportJarAsProjectPlugin"
-      version="1.0.1">
+      version="1.0.2">
 
-   <description url="http://helospark.com/import-jar-as-project/">
+   <description url="https://github.com/helospark/import-jar-as-project">
       Import jar as project plugin
    </description>
 
@@ -31,7 +31,7 @@ SOFTWARE.
    </license>
 
    <url>
-      <update label="Import jar as plugin site" url="http://helospark.com/eclipse_plugin/import-jar-as-project/"/>
+      <update label="Import jar as plugin site" url="https://raw.githubusercontent.com/helospark/eclipse-update-site/refs/heads/main/import-jar-as-project"/>
    </url>
 
    <requires>

@@ -4,7 +4,7 @@
       Plugin to generate builder
    </description>
 
-   <feature url="com.helospark.ImportJarAsProject.feature_1.0.1.jar" id="com.helospark.ImportJarAsProjectFeature" version="1.0.1">
+   <feature url="com.helospark.ImportJarAsProject.feature_1.0.2.jar" id="com.helospark.ImportJarAsProjectFeature" version="1.0.2">
       <category name="com.helospark.ImportJarAsProject.category"/>
    </feature>
    <!--

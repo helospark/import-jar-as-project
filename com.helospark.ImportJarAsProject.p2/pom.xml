@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.helospark</groupId>
 		<artifactId>com.helospark.ImportJarAsProject</artifactId>
-		<version>1.0.1</version>
+		<version>1.0.2</version>
 	</parent>
 	<artifactId>com.helospark.ImportJarAsProject.p2</artifactId>
 	<packaging>eclipse-repository</packaging>
