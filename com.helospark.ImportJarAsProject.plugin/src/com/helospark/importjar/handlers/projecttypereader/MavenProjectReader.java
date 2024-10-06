@@ -5,7 +5,9 @@ import static java.io.File.separator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.lang.reflect.Constructor;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.resources.IFolder;
@@ -46,6 +48,26 @@ public class MavenProjectReader implements ProjectCreatorChainItem {
 
         ProjectUtil.addNature(jarProject, "org.eclipse.m2e.core.maven2Nature");
         ProjectUtil.appendToClasspath(jarProject, Arrays.asList(sourceFolder, resourceFolder));
-        (new UpdateMavenProjectJob(new IProject[] { jarProject.getProject() })).schedule();
+        IProject[] project = new IProject[] { jarProject.getProject() };
+        createUpdateMavenProjectJob(project).schedule();
+    }
+
+    // Handle backward incompatible API change in a graceful way: https://github.com/eclipse-m2e/m2e-core/pull/828
+    private UpdateMavenProjectJob createUpdateMavenProjectJob(IProject[] project) {
+        try {
+            Constructor<?> constructor = UpdateMavenProjectJob.class.getConstructor(IProject[].class);
+            UpdateMavenProjectJob updateMavenProjectJob = (UpdateMavenProjectJob) constructor.newInstance(new Object[] { project });
+
+            return updateMavenProjectJob;
+        } catch (Throwable e) {
+            try {
+                Constructor<?> constructor = UpdateMavenProjectJob.class.getConstructor(Collection.class);
+                UpdateMavenProjectJob updateMavenProjectJob = (UpdateMavenProjectJob) constructor.newInstance(Arrays.asList(project));
+
+                return updateMavenProjectJob;
+            } catch (Throwable e2) {
+                throw new RuntimeException(e2);
+            }
+        }
     }
 }

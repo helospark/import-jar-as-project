@@ -2,7 +2,7 @@
 <feature
       id="com.helospark.ImportJarAsProjectFeature"
       label="ImportJarAsProjectPlugin"
-      version="1.0.2">
+      version="1.0.3">
 
    <description url="https://github.com/helospark/import-jar-as-project">
       Import jar as project plugin
